@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jude Yankson — Computer Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b0e0f;
+      --bg2:       #111517;
+      --bg3:       #181d1f;
+      --border:    #252b2e;
+      --text:      #e8eaeb;
+      --muted:     #6b7578;
+      --accent:    #c8f04d;
+      --accent2:   #4df0c8;
+      --danger:    #f04d6e;
+      --rad:       4px;
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-body: 'Fraunces', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(11,14,15,0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: .85rem;
+      color: var(--accent);
+      letter-spacing: .08em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .06em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 40%, rgba(200,240,77,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 70%, rgba(77,240,200,.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--accent);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp .6s .1s forwards;
+    }
+    .hero-left h1 {
+      font-family: var(--font-head);
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -.03em;
+      opacity: 0;
+      animation: fadeUp .7s .2s forwards;
+    }
+    .hero-left h1 strong { color: var(--accent); display: block; }
+    .hero-sub {
+      margin-top: 1.6rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 440px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp .7s .35s forwards;
+    }
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .7s .5s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.6rem;
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-decoration: none;
+      border-radius: var(--rad);
+      transition: all .2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent); color: #0b0e0f; border: none;
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: #d9ff60; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-right {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 1.2rem;
+      opacity: 0;
+      animation: fadeUp .8s .4s forwards;
+    }
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .8rem;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-lab {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .hero-badge {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: .8rem 1.2rem;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--muted);
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .hero-badge span.dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--accent);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      font-weight: 300;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-links { display: flex; flex-direction: column; gap: .7rem; margin-top: 2rem; }
+    .slink {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .slink:hover { color: var(--accent); }
+    .slink::before { content: '→'; color: var(--accent); }
+
+    /* ── SKILLS ── */
+    #skills { border-top: 1px solid var(--border); }
+    .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .skill-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: 1.8rem;
+      transition: border-color .2s;
+    }
+    .skill-card:hover { border-color: rgba(200,240,77,.3); }
+    .skill-cat {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--accent);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tag {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: .3rem .75rem;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--text);
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg2); border-top: 1px solid var(--border); }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: 1.8rem 2rem;
+      display: flex; flex-direction: column; gap: .8rem;
+      transition: border-color .25s, transform .2s;
+    }
+    .project-card:hover { border-color: rgba(200,240,77,.35); transform: translateY(-2px); }
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+    .project-name {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .project-desc {
+      font-size: .95rem;
+      color: var(--muted);
+      font-weight: 300;
+      flex: 1;
+    }
+    .project-stack { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .pstack-tag {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--accent2);
+      letter-spacing: .06em;
+    }
+    .pstack-tag::before { content: '#'; opacity: .6; }
+    .plink {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .06em;
+      align-self: flex-start;
+      transition: color .2s;
+    }
+    .plink:hover { color: var(--accent); }
+
+    /* ── EXPERIENCE ── */
+    #experience { border-top: 1px solid var(--border); }
+    .exp-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .exp-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: 1.8rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .5rem 2rem;
+      align-items: start;
+    }
+    .exp-role {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .exp-company {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--accent);
+      letter-spacing: .08em;
+    }
+    .exp-desc {
+      font-size: .95rem;
+      color: var(--muted);
+      font-weight: 300;
+      grid-column: 1 / -1;
+      margin-top: .3rem;
+    }
+    .exp-period {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg2); border-top: 1px solid var(--border); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; }
+    .contact-intro p {
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: .8rem; }
+
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    input, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: .85rem 1rem;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+    }
+    input:focus, textarea:focus { border-color: var(--accent); }
+    textarea { min-height: 130px; resize: vertical; }
+    .send-btn {
+      background: var(--accent);
+      color: #0b0e0f;
+      border: none;
+      padding: .85rem 1.8rem;
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      border-radius: var(--rad);
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      align-self: flex-start;
+    }
+    .send-btn:hover { background: #d9ff60; transform: translateY(-1px); }
+    #form-msg {
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      padding: .6rem 1rem;
+      border-radius: var(--rad);
+      display: none;
+    }
+    #form-msg.ok  { background: rgba(200,240,77,.1); color: var(--accent); display: block; }
+    #form-msg.err { background: rgba(240,77,110,.1); color: var(--danger); display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .3; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.4rem; }
+      .nav-links { gap: 1.2rem; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 1.4rem 4rem; gap: 3rem; }
+      .hero-right { align-items: flex-start; }
+      section { padding: 4rem 1.4rem; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: .6rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">jude_yankson.dev</div>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">// Computer Engineer</p>
+      <h1>Jude<br>Yankson<br><strong>Builder</strong></h1>
+      <p class="hero-sub">
+        Computer Engineering student at GCTU with interests in software development,
+        Flutter, embedded systems, networking, and backend development.
+        I enjoy building practical solutions and learning new technologies.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Get in Touch →</a>
+        <a href="cv.pdf" download class="btn btn-secondary">⬇ Download CV</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-lab">projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">6+</div>
+          <div class="stat-lab">technologies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-lab">domains</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-lab">curiosity</div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Based in Accra, Ghana — open to opportunities
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <p class="section-label">// about</p>
+        <h2 class="section-title">Who I Am</h2>
+        <div class="about-text">
+          <p>
+            I am a Computer Engineering student at Ghana Communication Technology University (GCTU)
+            with a passion for software engineering, mobile development, and embedded systems.
+          </p>
+          <p>
+            I have worked on Flutter applications, backend APIs with FastAPI,
+            Arduino projects, networking labs, and software development projects.
+            I enjoy solving problems and building systems that make people's lives easier.
+          </p>
+        </div>
+      </div>
+      <div>
+        <p class="section-label" style="margin-top:3.5rem">// connect</p>
+        <div class="contact-links about-links">
+          <a href="https://github.com/elon-jude" class="slink" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/jude-yankson-201783364/" class="slink" target="_blank">LinkedIn</a>
+          <a href="mailto:yanksonjude92@gmail.com" class="slink">yanksonjude92@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// skills</p>
+    <h2 class="section-title">What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-cat">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">C</span>
+          <span class="tag">C++</span>
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Embedded &amp; Hardware</div>
+        <div class="skill-tags">
+          <span class="tag">Arduino</span>
+          <span class="tag">Embedded Systems</span>
+          <span class="tag">Electronics</span>
+          <span class="tag">Circuit Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Web &amp; Mobile</div>
+        <div class="skill-tags">
+          <span class="tag">Flutter</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Tools &amp; Platforms</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Cisco Packet Tracer</span>
+          <span class="tag">MATLAB</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// projects</p>
+    <h2 class="section-title">Things I've Built</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <div class="project-name">Tech News App</div>
+        <div class="project-desc">
+          A Flutter application that displays technology news with a modern user interface.
+        </div>
+        <div class="project-stack">
+          <span class="pstack-tag">flutter</span>
+          <span class="pstack-tag">dart</span>
+          <span class="pstack-tag">api</span>
+        </div>
+        <a href="https://github.com/elon-jude/news_app" class="plink" target="_blank">→ github</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <div class="project-name">ATM Simulator</div>
+        <div class="project-desc">
+          A banking simulation system written in C++ supporting account management and transactions.
+        </div>
+        <div class="project-stack">
+          <span class="pstack-tag">c++</span>
+          <span class="pstack-tag">oop</span>
+        </div>
+        <a href="https://github.com/elon-jude/Bank_ATM_Project" class="plink" target="_blank">→ github</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <div class="project-name">Password Vault</div>
+        <div class="project-desc">
+          A Python-based password manager for securely storing and managing credentials.
+        </div>
+        <div class="project-stack">
+          <span class="pstack-tag">python</span>
+          <span class="pstack-tag">security</span>
+        </div>
+        <a href="https://github.com/elon-jude/Passwordvault_Project" class="plink" target="_blank">→ github</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <div class="project-name">Portfolio Website</div>
+        <div class="project-desc">
+          A personal portfolio website built with HTML, CSS, JavaScript and FastAPI backend for the contact form.
+        </div>
+        <div class="project-stack">
+          <span class="pstack-tag">html</span>
+          <span class="pstack-tag">css</span>
+          <span class="pstack-tag">javascript</span>
+          <span class="pstack-tag">fastapi</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// experience</p>
+    <h2 class="section-title">Where I've Worked</h2>
+    <div class="exp-list">
+      <div class="exp-card">
+        <div>
+          <div class="exp-role">Backend Development Intern</div>
+          <div class="exp-company">Internship</div>
+        </div>
+        <div class="exp-period">Recent</div>
+        <p class="exp-desc">
+          Contributed to backend systems and technology operations. Gained hands-on experience
+          with APIs, server-side development, and production workflows.
+        </p>
+      </div>
+      <div class="exp-card">
+        <div>
+          <div class="exp-role">BSc Computer Engineering</div>
+          <div class="exp-company">Ghana Communication Technology University — GCTU</div>
+        </div>
+        <div class="exp-period">In Progress</div>
+        <p class="exp-desc">
+          Studying computer engineering with focus areas spanning embedded systems,
+          software development, networking, and digital electronics.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <p class="section-label">// contact</p>
+        <h2 class="section-title">Let's Talk</h2>
+        <p>Have a project, opportunity, or just want to say hello? Send me a message and I'll get back to you.</p>
+        <div class="contact-links">
+          <a href="https://github.com/elon-jude" class="slink" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/jude-yankson-201783364/" class="slink" target="_blank">LinkedIn</a>
+          <a href="mailto:yanksonjude92@gmail.com" class="slink">Email</a>
+        </div>
+      </div>
+
+      <div>
+        <form id="contactForm">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Your name" required />
+            <input type="email" name="email" placeholder="Your email" required />
+          </div>
+          <textarea name="message" placeholder="Your message…" required></textarea>
+          <div id="form-msg"></div>
+          <button type="submit" class="send-btn">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Jude Yankson</span>
+    <span>Built with HTML · FastAPI · ☕</span>
+    <a href="https://github.com/elon-jude" target="_blank">github/elon-jude</a>
+  </footer>
+
+  <script>
+    const BACKEND = "https://jude-yankson-api.onrender.com";
+
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("form-msg");
+      msg.className = "";
+      msg.style.display = "none";
+
+      const btn = e.target.querySelector(".send-btn");
+      btn.disabled = true;
+      btn.textContent = "Sending…";
+
+      const formData = {
+        name:    e.target.querySelector('input[name="name"]').value,
+        email:   e.target.querySelector('input[name="email"]').value,
+        message: e.target.querySelector('textarea[name="message"]').value
+      };
+
+      try {
+        const response = await fetch(`${BACKEND}/contact`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+        if (response.ok) {
+          msg.textContent = result.status || "Message sent! I'll be in touch soon.";
+          msg.className = "ok";
+          e.target.reset();
+        } else {
+          throw new Error(result.detail || "Server error");
+        }
+      } catch (err) {
+        msg.textContent = "Something went wrong. Try emailing me directly.";
+        msg.className = "err";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Send Message →";
+      }
+    });
+  </script>
+
+</body>
+</html>
