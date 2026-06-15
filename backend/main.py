@@ -5,9 +5,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv 
 from email.message import EmailMessage 
-
 load_dotenv()
-
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -16,34 +14,26 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 class Contact(BaseModel):
     name: str
     email: str
     message: str
-
 @app.get("/")
 def home():
     return {"message": "Backend is working"}
-
 @app.post("/contact")
 def contact(data: Contact):
-
     print("CONTACT REQUEST RECEIVED")
     print(data)
-
     try:
         msg = EmailMessage()
-
         msg["Subject"] = f"Portfolio Message from {data.name}"
         msg["From"] = os.getenv("EMAIL_ADDRESS")
         msg["To"] = os.getenv("EMAIL_ADDRESS")
-
         msg.set_content(
             f"""
 Name: {data.name}
 Email: {data.email}
-
 Message:
 {data.message}
 """
